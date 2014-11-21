@@ -1,5 +1,5 @@
-Redwine Logger
-==============
+# Redwine Logger
+
 Redwine Logger is mainly created for logging Redwine service.
 
   - RedwineLogger by deafult logs to RabbitMQ 
@@ -47,7 +47,27 @@ Now install amqp php extension using pecl
 $ sudo pecl install amqp
 ```
 ### Usage
+Configuring the RabbitMQ:
 
+> Ensure that you have running RabbitMQ service. Check the status of the same on Ubuntu/Debain by ``sudo service rabbitmq-server satus``. Use the ``RabbitMQConfiguration.php`` for configuring your logger to connect to the message broker.
+
+```php
+    CONST USER = "guest";
+	CONST PASSWORD = "guest";
+	CONST HOST = "localhost";
+	CONST VHOST =  "/";
+	CONST PORT = "5672";
+	CONST EXCHANGE_NAME = "redwine.log";
+```
+> To create rabbitmq exchanges and queue use the admin webconsole of rabbitmq(`eg: http://localhost:15672`). Or if you dont have the web console use the below method to create exchanges and queues.
+
+```sh
+$ rabbitmqadmin declare exchange name="redwine.log" type="direct" durable=true
+$ rabbitmqadmin declare queue name="info.redwine"  durable=true
+$ rabbitmqadmin declare queue name="error.redwine"  durable=true
+$ rabbitmqadmin declare binding source="redwine.log" destination="info.redwine" routing_key="info.redwine"
+$ rabbitmqadmin declare binding source="redwine.log" destination="error.redwine" routing_key="erro.redwine"
+```
 Example.php explain how to use it:
 ```php
 require_once 'RedwineLogger.php';
