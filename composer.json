@@ -1,0 +1,13 @@
+{
+    "name": "root/redwine",
+    "description": "Redwine",
+    "authors": [
+        {
+            "name": "Vyshakh",
+            "email": "vyshakh@jabong.com"
+        }
+    ],
+    "require": {
+        "monolog/monolog": "~1.11"
+    }
+}
